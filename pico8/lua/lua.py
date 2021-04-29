@@ -16,7 +16,7 @@ from . import lexer
 from . import parser
 
 
-PICO8_LUA_CHAR_LIMIT = 32768
+PICO8_LUA_CHAR_LIMIT = 65536
 PICO8_LUA_TOKEN_LIMIT = 8192
 PICO8_LUA_COMPRESSED_CHAR_LIMIT = 15360
 
@@ -39,7 +39,8 @@ PICO8_BUILTINS = {
     b'mapdraw',  # deprecated function
     b'self',   # a special name in Lua OO
     b'?',   # alias for "print"
-    b'__index'  # internal function sometimes used by carts
+    b'__index',  # internal function sometimes used by carts
+    b'peek2',b'peek4',b'ipairs',b'poke2',b'poke4',b'ord',b'chr'
 }
 
 
