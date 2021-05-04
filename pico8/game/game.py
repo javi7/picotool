@@ -23,7 +23,7 @@ from ..music.music import Music
 HEADER_TITLE_STR = b'pico-8 cartridge // http://www.pico-8.com\n'
 HEADER_TITLE_RE = re.compile(br'pico-8 cartridge // http://www.pico-8.com\r?\n')
 HEADER_VERSION_RE = re.compile(br'version (\d+)\r?\n')
-SECTION_DELIM_RE = re.compile(br'__(\w+)__\n')
+SECTION_DELIM_RE = re.compile(br'__(\w+)__\r?\n')
 
 DEFAULT_VERSION = 8
 EMPTY_LABEL_FNAME = os.path.join(os.path.dirname(__file__), 'empty_018.p8.png')
@@ -152,6 +152,8 @@ class Game():
         section_lines = {}
         while True:
             line = instr.readline()
+            converted_new_lines = line.decode().replace('\r\n', '\n')
+            line = str.encode(converted_new_lines)
             if not line:
                 break
             section_delim_m = SECTION_DELIM_RE.match(line)
