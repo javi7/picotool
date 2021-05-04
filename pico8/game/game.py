@@ -21,7 +21,8 @@ from ..sfx.sfx import Sfx
 from ..music.music import Music
 
 HEADER_TITLE_STR = b'pico-8 cartridge // http://www.pico-8.com\n'
-HEADER_VERSION_RE = re.compile(br'version (\d+)\n')
+HEADER_TITLE_RE = re.compile(br'pico-8 cartridge // http://www.pico-8.com\r?\n')
+HEADER_VERSION_RE = re.compile(br'version (\d+)\r?\n')
 SECTION_DELIM_RE = re.compile(br'__(\w+)__\n')
 
 DEFAULT_VERSION = 8
@@ -138,7 +139,7 @@ class Game():
     @classmethod
     def get_raw_data_from_p8_file(cls, instr, filename=None):
         header_title_str = instr.readline()
-        if header_title_str != HEADER_TITLE_STR:
+        if HEADER_TITLE_RE.match(header_title_str) is None:
             raise InvalidP8HeaderError()
         header_version_str = instr.readline()
         version_m = HEADER_VERSION_RE.match(header_version_str)
